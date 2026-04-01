@@ -1,16 +1,23 @@
-version: '3.8'
-
 services:
   backend:
-    build: ./backend
+    build: 
+      context: ./backend
     ports:
       - "8000:8000"
     container_name: django_server
+    volumes:
+      - ./backend:/app   
+    environment:
+      - PYTHONUNBUFFERED=1
 
   frontend:
-    build: ./frontend
+    build: 
+      context: ./frontend
     ports:
       - "5173:5173"
     container_name: react_ui
+    volumes:
+      - ./frontend:/app  
+      - /app/node_modules 
     depends_on:
       - backend
